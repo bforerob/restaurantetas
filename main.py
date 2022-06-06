@@ -17,16 +17,23 @@ def tomarPedido():
         print(recetas[i][0], recetas[i][1], recetas[i][2])
 
     a = int(input("seleccione su comida: "))
-    pedidos.enqueue(recetas[a][1])
-    ventas.apilar(recetas[a][1])
-    dinero += recetas[a][2]
-    menu()
+    if (a == 0 or a >= len(recetas)):
+        print("por favor dijite una opcion valida")
+        tomarPedido()
+    else:
+        print("agregando ", recetas[a][1], "a la lista de pedidos")
+        pedidos.enqueue(recetas[a][1])
+        ventas.apilar(recetas[a][2])
+        ventas.apilar(recetas[a][1])
+        dinero += recetas[a][2]
+        menu()
 
 
 def observarPedidos():
     if pedidos.length() == 0:
         print("no tienes pedidos inbesil")
     else:
+        print(pedidos.length())
         print(pedidos.string())
     menu()
 
@@ -42,20 +49,25 @@ def despacharPedido():
 
 def observarVentas():
     global dinero
-    print("Las ventas son de ", dinero,'$')
-
-    #AQUI VA EL CODIGO PARA MOSTRAR LA PILA JAJAJ
-    print("1. si")
-    print("2. no")
-    n = input("¿desea borrar la ultima venta?")
-    if n == '1':
-        ventas.desapilar()
-        menu()
-    if n == '2':
+    if dinero == 0:
+        print("aun no hay ventas el chuzo se cae a pedazos")
         menu()
     else:
-        print("por favor digite una opcion valida")
-        observarVentas()
+        print("Las ventas son de ", dinero,'$')
+        print(ventas.string())
+        print("1. si")
+        print("2. no")
+        n = input("¿desea borrar la ultima venta?")
+        if n == '1':
+            ventas.desapilar()
+            dinero -= ventas.tope()
+            ventas.desapilar()
+            menu()
+        if n == '2':
+            menu()
+        else:
+            print("por favor digite una opcion valida")
+            observarVentas()
 
 def carta():
     for i in range(0, len(recetas)):
