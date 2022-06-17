@@ -33,6 +33,7 @@ def limpiarMenu():
     administrarVentas.pack_forget()
     borrarVentaBot.pack_forget()
     borrarVentasText.pack_forget()
+    agregarPedidoText.pack_forget()
 def tomarPedido():
     limpiarMenu()
     tituloTomarPedido.pack(padx=10, pady=10)
@@ -46,6 +47,12 @@ def tomarPedido():
 
 def agregarPedido(a):
     global dinero
+    limpiarMenu()
+    agregarPedidoText["text"] = "agregando " + '\n' + recetas[a][1] + " de " + str(recetas[a][2]) + "$ \n a la lista de pedidos"
+    agregarPedidoText.pack(padx=10, pady=5)
+    tomarPedidoBot.pack(padx=10, pady=5)
+    administrarPedidosBot.pack(padx=10, pady=5)
+    menuPrincipalBot.pack(padx=10, pady=5)
     pedidos.enqueue(recetas[a][1])
     ventas.apilar(recetas[a][2])
     ventas.apilar(recetas[a][1])
@@ -183,6 +190,9 @@ borrarVentaBot = tkinter.Button(ventana, text ="Borrar Venta"
                                 , bg = fondoBotones
                                 , command = borrarVentas)
 borrarVentasText = tkinter.Label(ventana
+                                    , font = "Helvetica 20")
+
+agregarPedidoText = tkinter.Label(ventana
                                     , font = "Helvetica 20")
 
 tituloMenu.pack(padx=10, pady=10)
